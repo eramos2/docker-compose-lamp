@@ -1,0 +1,65 @@
+<html>
+<head>
+<title>Upload Images</title>
+    <meta charset="utf-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="../js/dropzone.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+	var cid = 4444;
+      Dropzone.autoDiscover = false;
+
+      $("#dropzone").dropzone({
+          url: "upload.php?cid="+cid,
+		  addRemoveLinks: true,
+		  maxFileSize: 1000,
+          dictResponseError: "There has been an error in the server.",
+          acceptedFiles: 'image/*,.jpg,.png,.gif,.JPG,.PNG,.GIF',
+
+          complete: function(file){
+              if(file.status == "success"){
+                  alert("The following image has been uploaded suscessfully: " + file.name);
+              }
+          },
+
+          error: function(){
+              alert("Error uploading the following image: " + file.name);
+          },
+
+          removedfile: function(file, serverFileName){
+              var name = file.name;
+			  var dataToSend = {
+					filename: name,
+					cid: cid };
+              $.ajax({
+                  type: "POST",
+                  url: "upload.php?delete=true",
+                  data: dataToSend,
+                  sucess: function(data) {
+                      var json = JSON.parse(data);
+                      if(json.res== true){
+                          var element;
+                          (element = file.previewElement) != null ?
+                           element.parentNode.removeChild(file.previewElement): false;
+                          alert("Image has been removed: " + name);
+                      }
+                  }
+              })
+          }
+      });
+    });
+</script>
+
+<link href="../css/dropzone.css" type="text/css" rel="stylesheet" />
+
+</head>
+<body>
+
+
+<div id="dropzone" class="dropzone"></div>
+
+
+
+</body>
+</html>

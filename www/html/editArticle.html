@@ -1,0 +1,29 @@
+
+<div class="container">
+    <form>
+        <div class="row marginTop">
+            <h2><span class="glyphicon glyphicon-edit marginTop"></span> Edit Article</h2>
+        </div>
+
+        <div id="error"></div>
+        <div class="row">
+            <div><input type="text" style="display: none" name="newsId" id="newsId"></div>
+            <div class="col-md-6"><input type="text" name="title" placeholder="Title"  id="editArticleTitle" required></div>
+            <div class="col-md-12"><textarea class="form-control textArea" id="editArticleDesc" name="description" placeholder="Description" rows="7" required></textarea></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Article Photo</h3>
+                <div id="dropzone-edit-article-photo" class="dropzone"></div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-6 pull-right buttonMargin">
+            <p>
+                <button type="button" class="btn btn-primary btn-lg" onClick="validateEditArt(this.form)">Add</button>
+                <button type="button" class="btn btn-default btn-lg" onClick="loadPage('controlPanel')">Cancel</button>
+            </p>
+        </div>
+    </form>
+</div>

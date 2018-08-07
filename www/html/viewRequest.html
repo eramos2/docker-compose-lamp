@@ -1,0 +1,84 @@
+
+<div class="container" id="viewReqContainer">
+
+    <div class="row marginTop">
+        <h2><span class="glyphicon glyphicon-exclamation-sign"></span> New Requests</h2>
+    </div>
+<div id="error"></div>
+    <form>
+    <div class="row">
+        <div><input type="text" style="display: none" name="submissionId" id="submissionId"></div>
+        <div class="col-md-6"><input type="text" name="companyName" id="viewRequestName"placeholder="Business Name"></div>
+        <div class="col-md-6"><input type="text" name="website" id="viewRequestWebsite" placeholder="Website"></div>
+        <div class="col-md-6"><input type="text" name="address" id="viewRequestAddress"placeholder="Address"></div>
+        <div class="col-md-2"><input type="text" name="city" id="viewRequestCity"placeholder="City"></div>
+        <div class="col-md-2"><input type="text" name="country" id="viewRequestCountry"placeholder="Country"></div>
+        <div class="col-md-2"><input type="text" name="zipcode" id="viewRequestZipCode" maxlength="5" placeholder="Zip Code"></div>
+        <div class="col-md-4"><input type="phone" name="phone" id="viewRequestPhone" maxlength="10" placeholder="Telephone"></div>
+        <div class="col-md-4"><input type="email" name="email" id="viewRequestEmail" placeholder="Email"></div>
+        <div class="col-md-4"><input type="text" name="videoURL"  id="viewRequestVideoURL" placeholder="Video URL" required></div>
+        <div class="col-md-12"><textarea class="form-control textArea" id="viewRequestDescription" name="description" placeholder="Description" rows="7"></textarea></div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Business Photos</h3>
+            <div id="dropzone-photos" class="dropzone"></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Business Logo</h3>
+            <div id="dropzone-sub-logo" class="dropzone"></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <h3>Materials</h3>
+            <ul class="list-group categoryFont navList" id="viewReqMat">
+            </ul>
+        </div>
+
+        <div class="col-md-4">
+            <h3>Processes</h3>
+            <ul class="list-group categoryFont navList" id="viewReqProc">
+            </ul>
+        </div>
+
+        <div class="col-md-4">
+            <h3>Services</h3>
+            <ul class="list-group categoryFont navList" id="viewReqServ">
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5 pull-right buttonMargin">
+            <p>
+                <button type="button" class="btn btn-primary btn-lg" onclick="validateAddBsn2(this.form)">Add</button>
+                <button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#viewReqModal">Remove</button>
+                <button type="button" class="btn btn-default btn-lg" onclick="loadPage('controlPanel')">Cancel</button>
+            </p>
+        </div>
+    </div>
+    </form>
+</div>
+
+<div class="modal fade" id="viewReqModal" tabindex="-1" role="dialog" aria-labelledby="viewReqModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Removal Confirmation</h4>
+            </div>
+            <div class="modal-body">
+                <h3>Are you sure you want to remove this request?</h3>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="preDelete()">Save changes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

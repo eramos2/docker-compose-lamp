@@ -1,0 +1,32 @@
+
+    <div class="container" >
+        <div class="row">
+            <div class="contcustom">
+                <div class="row addMarginTop">
+                    <h2><span class="glyphicon glyphicon-edit marginTop"></span> Edit Account</h2>
+                </div>
+                <div id="error"></div>
+                <form id="validationForm">
+                    <input type="text" name="firstname" placeholder="First Name" id="editAccFirstName" required>
+                    <input type="text" name="lastnames" placeholder="Last Name" id="editAccLastName" required>
+                    <input type="text" name="occupation" placeholder="Occupation" id="editAccOccupation">
+                    <!--<input type="date" name="birthdate">-->
+                    <input type="text" name="city" placeholder="City" id="editAccCity">
+                    <input type="password" name="pass1" placeholder="New Password" id="editAccPass1" required>
+                    <input type="password" name="pass2" placeholder="Confirm New Password" id="editAccPass2" required>
+                    <button class="btn btn-default wide" type="button" value="Submit" onClick="validateEditAccount(this.form)">Save changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showPasswords(){
+            if($('#checkPass').val() == checked){
+                $('#passwordEditor').css('display','block');
+            }
+            else{
+                $('#passwordEditor').css('display','none');
+            }
+        }
+    </script>

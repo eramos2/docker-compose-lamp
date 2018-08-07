@@ -1,0 +1,86 @@
+
+<!--------------------------------------------------------------------------------------------->
+<div class="row" id="googleMap"></div>
+
+<div class="row panelContainerMargin">
+    <div class="panel panel-default" id="panelAbove">
+        <div class="panel-heading">
+            <h3 class="panel-title companyName" id="companyName1"></h3>
+            <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <ul>
+                        <li class="lis" id="companyLogo"></li>
+                        <li class="lis" id="companyName2"><span style="font-weight: bold"></span></li>
+                        <li class="lis" id="companyDesc"><span style="font-weight: bold"></span></li>
+                        <li class="lis" id="companyPhone"><span style="font-weight: bold"></span></li>
+                        <li class="lis" id="companyWeb"><span style="font-weight: bold"></span>
+                            <a href="http://www.valcorpr.com"></a></li>
+                        <li class="lis" id="companyEmail"><span style="font-weight: bold"></span></li>
+                        <li class="lis" id="companyAddress"><span style="font-weight: bold"></span></li>
+                    </ul>
+                    <div class="row">
+                        <ul>
+                            <li class="lis" id="material"></li>
+                        </ul>
+                        <ul>
+                            <li class="lis" id="process"></li>
+                        </ul>
+                        <ul>
+                            <li class="lis" id="service"></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-6" >
+                    <div class="row" id="youtubeLink">
+                    </div>
+
+                    <div class="row">
+                        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                            <!-- Indicators -->
+                            <ol id="companyIndicators" class="carousel-indicators">
+                            </ol>
+
+                            <!-- Wrapper for slides -->
+                            <div id="companyCarousel" class="carousel-inner">
+                            </div>
+
+                            <!-- Controls -->
+                            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left"></span>
+                            </a>
+                            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        $('.panel-heading span.clickable').on("click", function (e) {
+            if ($(this).hasClass('panel-collapsed')) {
+                // expand the panel
+                $(this).removeClass('panel-collapsed');
+                $("#googleMap").slideToggle("slow");
+                $(this).find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+                $(".panel").css("margin-top","0px");
+            }
+
+            else {
+                // collapse the panel s
+                $(this).addClass('panel-collapsed');
+                $("#googleMap").slideToggle("slow");
+                $(this).find('i').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+                $(".panel").css("margin-top","54px");
+            }
+        });
+    });
+</script>

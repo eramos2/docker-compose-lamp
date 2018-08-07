@@ -1,0 +1,18 @@
+
+<div class="container" id="loginContainer">
+    <div class="row row-centered">
+        <div class="col-sm-12 col-lg-4 col-centered contcustom">
+            <div class="row row-centered loginMarginTop">
+                <h2><span class="glyphicon glyphicon-user marginTop"></span> Login</h2>
+            </div>
+            <div id="error"></div>
+            <form id="validationForm">
+                <input type="text" name="loginEmail" id="loginEmail" placeholder="Email" required>
+                <input type="password" name="loginPass" id="loginPass" placeholder="Password" required>
+                <button class="btnLogin btn-default wide" type="button" value="Submit" onClick="validateLogin(this.form)">Login</button>
+            </form>
+            <p ><a onclick="loadPage('recoverPassword')">Forgot Password?</a>
+            <a class="pull-right" onclick="loadPage('changePassword')">Have a passcode?</a></p>
+        </div>
+    </div>
+</div>

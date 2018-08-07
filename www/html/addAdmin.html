@@ -1,0 +1,37 @@
+
+<div class="container">
+    <form>
+        <div class="row addMarginTop">
+            <h2><span class="glyphicon glyphicon-plus-sign marginTop"></span> Add Administrator</h2>
+        </div>
+        <div id="error"></div>
+
+            <div class="row">
+                <div class="col-lg-12"><input type="text" name="firstname" id="addAdminFName" placeholder="First Name" required></div>
+                <div class="col-lg-12"><input type="text" name="lastnames" id="addAdminFLast" placeholder="Last Name" required></div>
+                <div class="col-md-4"><input type="text" name="email" id="addAdminEmail" placeholder="Email" required></div>
+                <div class="col-md-4"><input type="password" name="pass1" id="addAdminPass1" placeholder="Password" required></div>
+                <div class="col-md-4"><input type="password" name="pass2" id="addAdminPass2" placeholder="Confirm Password" required></div>
+                <div class="col-lg-3"><input type="text" name="occupation" id="addAdminOccupation" placeholder="Occupation"></div>
+                <div class="col-lg-3"><input type="text" name="birthdate" id="addAdminBirthdate" placeholder="birthdate yyyymmdd"></div>
+                <div class="col-lg-3"><input type="text" name="city" id="addAdminCity" placeholder="City"></div>
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <select class="input-lg" id="select" name="adminType">
+                            <option disabled selected value="0">Type of Administrator</option>
+                            <option value="1">Super-Administrator</option>
+                            <option value="2">Administrator</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        <div class="row">
+            <div class="col-lg-4 col-sm-6 pull-right buttonMargin">
+                <p>
+                    <button type="button" class="btn btn-primary btn-lg" onclick="validateAddAdmin(this.form)">Add</button>
+                    <button type="button" class="btn btn-default btn-lg" onClick="loadPage('controlPanel')">Cancel</button>
+                </p>
+            </div>
+        </div>
+    </form>
+</div>

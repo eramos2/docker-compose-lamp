@@ -1,0 +1,28 @@
+
+<div class="container">
+    <form>
+        <div class="row marginTop">
+            <h2><span class="glyphicon glyphicon-plus-sign marginTop"></span> Add Article</h2>
+        </div>
+
+        <div id="error"></div>
+        <div class="row">
+            <div class="col-md-6"><input type="text" name="title" id="addArtTitle" placeholder="Title" required></div>
+            <div class="col-md-12"><textarea class="form-control textArea" name="description" id="addArtDesc" placeholder="Description" rows="7" required></textarea></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Article Photo</h3>
+                <div id="dropzone-article-photo" class="dropzone"></div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-6 pull-right buttonMargin">
+            <p>
+                <button type="button" id="clickMe" class="btn btn-primary btn-lg" onClick="validateAddArticle(this.form)">Add</button>
+                <button type="button" class="btn btn-default btn-lg" onClick="loadPage('controlPanel')">Cancel</button>
+            </p>
+        </div>
+    </form>
+</div>

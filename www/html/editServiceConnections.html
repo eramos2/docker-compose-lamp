@@ -1,0 +1,42 @@
+
+<div class="container listContainer">
+    <div class="row addMarginTop">
+        <h2><span class="glyphicon glyphicon-edit marginTop"></span> Edit Sub-Service Connections</h2>
+    </div>
+
+    <div id="error"></div>
+    <form name="todo">
+    <div class="row">
+        <div class="col-md-4 categoryList">
+            <h4>Services</h4>
+            <div>
+                <select class="form-control" id="editServTypes" onchange="getServiceRelated(this.form)">
+                    <!--<option disabled selected>Choose One Material</option>-->
+                </select>
+            </div>
+
+        </div>
+
+
+            <div class="col-md-4  categoryList">
+                <h5>Materials Connections</h5>
+                <ul class="list-group navList" id="editServMatCons"> </ul>
+            </div>
+
+            <div class="col-md-4 categoryList">
+                <h5>Processes Connections</h5>
+                <ul class="list-group navList" id="editServProcCons">
+                </ul>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 pull-right buttonMargin" id="editServConnBtn">
+                    <p>
+                        <button type="button" class="btn btn-primary btn-lg" id="addBttn" onClick="validateEditServConn(this.form)">Add</button>
+                        <button type="button" class="btn btn-default btn-lg" id="cancelBttn" onClick="loadPage('controlPanel')">Cancel</button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </form>
+ </div>

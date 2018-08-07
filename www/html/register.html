@@ -1,0 +1,22 @@
+
+<div class="container">
+    <div class="row row-centered">
+        <div class="col-sm-12 col-md-4 col-centered contcustom registerMarginTop">
+            <div class="row row-centered loginMarginTop">
+                <h2><span class="glyphicon glyphicon-pencil marginTop"></span> Register</h2>
+            </div>
+            <div id="error"></div>
+            <form id="validationForm">
+                <input type="text" name="firstname" id="registerName" placeholder="First Name" required>
+                <input type="text" name="lastnames" id="registerLast" placeholder="Last Name" required>
+                <input type="text" name="email" id="registerEmail" placeholder="Email" required>
+                <input type="password" name="pass1" id="registerPass1" placeholder="Password" required>
+                <input type="password" name="pass2" id="registerPass2" placeholder="Confirm Password" required>
+                <input type="text" name="occupation" placeholder="Occupation">
+                <input type="text" name="birthdate" placeholder="Birthdate yyyy-mm-dd" id="registerBirth" >
+                <input type="text" name="city" placeholder="City">
+                <button class="btnLogin btn-default wide" type="button" value="Submit" onClick="validateResgister(this.form)">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>

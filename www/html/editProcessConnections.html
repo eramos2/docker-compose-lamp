@@ -1,0 +1,42 @@
+
+<div class="container listContainer">
+    <div class="row addMarginTop">
+        <h2><span class="glyphicon glyphicon-edit marginTop"></span> Edit Sub-Process Connections</h2>
+    </div>
+
+    <div id="error"></div>
+    <form action="">
+        <div class="row">
+            <div class="col-md-4 categoryList">
+                <h4>Processes</h4>
+                <div>
+                    <select class="form-control" id="editProcTypes" onchange="getProcessRelated(this.form)">
+                        <!--<option disabled selected>Choose One Material</option>-->
+                    </select>
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4 categoryList">
+                <h5>Materials Connections</h5>
+                <ul class="list-group navList" id="editProcMatCons"> </ul>
+            </div>
+
+            <div class="col-md-4 categoryList">
+                <h5>Services Connections</h5>
+                <ul class="list-group navList" id="editProcServCons">
+                </ul>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 pull-right buttonMargin" id="editProcConnBtn">
+                    <p>
+                        <button type="button" class="btn btn-primary btn-lg" id="addBttn" onClick="validateEditProcConn(this.form)">Add</button>
+                        <button type="button" class="btn btn-default btn-lg" id="cancelBttn" onClick="loadPage('controlPanel')">Cancel</button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
