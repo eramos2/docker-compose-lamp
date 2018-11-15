@@ -9,37 +9,42 @@ $dbn = 'prd';
 $endpoint = $_REQUEST['endpoint'];
 $code = $_REQUEST['code'];
 $con = mysqli_connect($host, $user, $pass, $dbn);
+//prdn 2.0  some of rows contain non-utf8 encoded character causing json_encode to fail, next line fixes it
+mysqli_set_charset($con, 'utf8');
+error_log($endpoint,0);  
+error_log($code,0);  
 
 $sql = getQuery();
+
 
 if (!$con) {
     die('Could not connect: ' . mysqli_error($con));
 }
 
-if(isset($_REQUEST['multi']))
+if(isset($_REQUEST['multi'])){
     $row_result = mysqli_multi_query($con, $sql);
-
-else
+}
+else{
     $row_result = mysqli_query($con,$sql);
+}
 
 $response = "";
 $rows = array();
 
 if(!isset( $_REQUEST['du'] )){
+    error_log("Entered if !isset request du", 0);
     while($row = mysqli_fetch_array($row_result, MYSQLI_ASSOC)){
         $rows[] = $row;
     };
-
-    $response =  json_encode($rows);
+    error_log(print_r($rows,1), 0);
+    $response = json_encode($rows);
 }
-
 else {
     $num = mysqli_affected_rows($con);
     $arr = array("number" => $num);
     $rows[] = $arr;
     $response = json_encode($rows);
 }
-
 mysqli_close($con);
 
 //header('Content-Type: application/json');
@@ -378,21 +383,21 @@ function requestGetCompany(){
             $sql = "SELECT * FROM company NATURAL JOIN address WHERE address.city = '". $theCity ."' AND active = 0;";
             break;
 
-        case '2': //View al subservices of a business
+        case '2': //View all subservices of a business //prdn2.0 added serviceName, subcatImage - to help with routing on webapp
             $cid = $_GET['cid'];
-            $sql = "SELECT serviceId, subServiceId, subServiceName, model, limitation, application FROM (company NATURAL JOIN CAS NATURAL JOIN " .
+            $sql = "SELECT serviceId, serviceName, subServiceId, subServiceName, subcatImage, model, limitation, application FROM (company NATURAL JOIN CAS NATURAL JOIN " .
                     "subService) NATURAL JOIN serviceType WHERE companyId = '" . $cid . "' AND active = 0;";
             break;
 
-        case '3': //View al subprocesss of a business
+        case '3': //View all subprocesss of a business //prdn2.0 added processName, subcatImage - to help with routing on webapp
             $cid = $_GET['cid'];
-            $sql = "SELECT processId, subProcessId, subProcessName, model, limitation, application FROM (company NATURAL JOIN CAP NATURAL JOIN " .
+            $sql = "SELECT processId, processName, subProcessId, subProcessName, subcatImage, model, limitation, application FROM (company NATURAL JOIN CAP NATURAL JOIN " .
                     " subProcess) NATURAL JOIN processType WHERE companyId = '" . $cid . "' AND active = 0;";
             break;
 
-        case '4': //View al submaterials of a business
+        case '4': //View all submaterials of a business //prdn2.0 added material Name, subcatImage - to help with routing on webapp
             $cid = $_GET['cid'];
-            $sql = "SELECT materialId, subMaterialId, subMaterialName, model, limitation, application FROM (company NATURAL JOIN CAM NATURAL JOIN ".
+            $sql = "SELECT materialId, materialName, subMaterialId, subMaterialName, subcatImage, model, limitation, application FROM (company NATURAL JOIN CAM NATURAL JOIN ".
                     " subMaterial) NATURAL JOIN materialType WHERE companyId = '" . $cid . "' AND active = 0;";
             break;
 
@@ -1096,7 +1101,22 @@ function requestGetCompany(){
                 $smid = $_GET['sid'];
                 $sql = "SELECT subMaterialName, companyId, companyName, description, city, latitude, longitude, logo, logoType FROM company NATURAL JOIN address NATURAL JOIN CAM NATURAL JOIN subMaterial WHERE subMaterialId = '".$smid."' AND active = 0 ORDER BY companyName;";
                 break;
-
+            
+            //prdn 2.0
+            case '16': //get all companies that offer a subprocess by Name
+                $spname = $_GET['scname'];
+                $sql = "SELECT subProcessName, companyId, companyName, description, city, latitude, longitude, logo, logoType FROM company NATURAL JOIN address NATURAL JOIN CAP NATURAL JOIN subProcess WHERE subProcessName = '" . $spname . "' AND active = 0 ORDER BY companyName;";
+                break;
+            //prdn 2.0
+            case '17': //get all companies that offer a subservice by Name
+                $ssname = $_GET['scname'];
+                $sql = "SELECT subServiceName, companyId, companyName, description, city, latitude, longitude, logo, logoType FROM company NATURAL JOIN address NATURAL JOIN CAS NATURAL JOIN subService WHERE subServiceName = '" . $ssname . "' AND active = 0 ORDER BY companyName;";
+                break;
+            //prdn 2.0
+            case '18': //get all companies that offer a submaterial by Name
+                $smname = $_GET['scname'];
+                $sql = "SELECT subMaterialName, companyId, companyName, description, city, latitude, longitude, logo, logoType FROM company NATURAL JOIN address NATURAL JOIN CAM NATURAL JOIN subMaterial WHERE subMaterialName = '" . $smname . "' AND active = 0 ORDER BY companyName;";
+                break;
         default:
             break;
     }
