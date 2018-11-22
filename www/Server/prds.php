@@ -16,6 +16,7 @@ error_log($code,0);
 
 $sql = getQuery();
 
+error_log($sql, 0);
 
 if (!$con) {
     die('Could not connect: ' . mysqli_error($con));
@@ -36,7 +37,7 @@ if(!isset( $_REQUEST['du'] )){
     while($row = mysqli_fetch_array($row_result, MYSQLI_ASSOC)){
         $rows[] = $row;
     };
-    error_log(print_r($rows,1), 0);
+    //error_log(print_r($rows,1), 0);
     $response = json_encode($rows);
 }
 else {
@@ -138,21 +139,21 @@ function requestGetUser(){
     global $code;
 
     switch ($code) {
-        case '0': //get all users
+        case '0': //get all users //prdn2.0 change active = 0 to active IS NOT NULL to confirm user is active
             $sql = "SELECT userId, email, firstName, lastName, occupation, birthDate, city " .
-            "FROM users WHERE active = 0";
+            "FROM users WHERE active IS NOT NULL";
             break;
 
-        case '1': // Get a particular user
+        case '1': // Get a particular user //prdn2.0 change active = 0 to active IS NOT NULL to confirm user is active
             $uid = $_GET['uid'];
             $sql = "SELECT userId, email, firstName, lastName, occupation, birthDate, city " .
-            "FROM users WHERE userId = '" . $uid ."' AND active = 0;";
+            "FROM users WHERE userId = '" . $uid ."' AND active IS NOT NULL;";
             break;
 
-        case '2': //delete a particular user
+        case '2': //delete a particular user  //prdn2.0 changed active = 0 to active = NULL
             $uid = $_GET['uid'];
 
-            $sql = "UPDATE users SET active = now() WHERE userId ='" . $uid . "';";
+            $sql = "UPDATE users SET active = NULL WHERE userId ='" . $uid . "';";
             break;
 
         case '3': //Recover Password Request Passcode
@@ -192,10 +193,11 @@ function requestPostUser(){
         case '0': //verify users credentials
             $uemail = mysqli_real_escape_string($con,$_POST['uemail']);
             $upass = mysqli_real_escape_string($con,$_POST['upass']);
-
+            error_log($uemail . " " . $upass, 0);
+            //Change active = 0 to active IS NOT NULL to confirm user is active
             $sql = "SELECT userId, email, firstName, lastName, occupation, birthDate, city " .
             " FROM users WHERE ( email = '" . $uemail . "' AND userPassword = SHA2(CONCAT('" .
-                $upass . "','" . $uemail . "'),512) ) AND active = 0;";
+                $upass . "','" . $uemail . "'),512) ) AND active IS NOT NULL;";
             break;
 
         case '1': //add a new user
@@ -206,11 +208,12 @@ function requestPostUser(){
             $uoccu = mysqli_real_escape_string($con,$_POST['uoccu']);
             $ubdate = mysqli_real_escape_string($con,$_POST['ubdate']);
             $ucity = mysqli_real_escape_string($con,$_POST['ucity']);
-
+            //removed column active and value = 0 because database was giving error
+            //When performing this request prdn2.0 comment/change
             $sql = "INSERT INTO users (email, userPassword, firstName, lastName, " .
-                "occupation, birthDate, city, active) VALUES ('" . $uemail ."', SHA2(CONCAT('" . $upass .
+                "occupation, birthDate, city) VALUES ('" . $uemail ."', SHA2(CONCAT('" . $upass .
                     "','" . $uemail . "'),512),'"  . $uname . "','"  . $ulname . "','" .
-                $uoccu . "','". $ubdate . "','" . $ucity . "', 0);";
+                $uoccu . "','". $ubdate . "','" . $ucity . "');";
             break;
 
 
@@ -228,7 +231,7 @@ function requestPostUser(){
 
             break;
 
-        case '3': //Change User Password
+        case '3': //Change User Password //prdn2.0 with passcode
             $uemail = mysqli_real_escape_string($con,$_POST['uemail']);
             $upass = mysqli_real_escape_string($con,$_POST['upass']);
             $uid = $_POST['uid'];
@@ -238,7 +241,7 @@ function requestPostUser(){
             $uemail."' AND userType = '".$type."' ; ";
             break;
 
-        case '4': //
+        case '4': //Update user password
             $uemail = mysqli_real_escape_string($con,$_POST['uemail']);
             $upass = mysqli_real_escape_string($con,$_POST['upass']);
             $uid = $_POST['uid'];
@@ -258,31 +261,31 @@ function requestGetAdmin(){
     global $code;
 	global $con;
     switch ($code) {
-        case '0': //get all admins
+        case '0': //get all admins //prdn2.0 change active = 0 to active IS NOT NULL to confirm admin is active
             $sql = "SELECT adminId, adminTypeName, email, firstName, lastName, occupation, birthDate, ".
-                "city FROM admin NATURAL JOIN adminType WHERE active = 0;";
+                "city FROM admin NATURAL JOIN adminType WHERE active IS NOT NULL;";
             break;
 
         case '1': // Get a particular admin
             $aid = $_GET['aid'];
             $sql = "SELECT adminId, adminTypeName, email, firstName, lastName, occupation, birthDate, city ".
-                    "FROM admin NATURAL JOIN adminType WHERE adminId = '". $aid ."' AND active = 0;";
+                    "FROM admin NATURAL JOIN adminType WHERE adminId = '". $aid ."' AND active IS NOT NULL;";
             break;
 
         case '2': // Delete a particular admin
             $aid = $_GET['aid'];
-            $sql = "UPDATE admin SET active = now() WHERE adminId ='".$aid."';";
+            $sql = "UPDATE admin SET active = NULL WHERE adminId ='".$aid."';";
             break;
 
         case '3': //look for admin by name
             $name = mysqli_real_escape_string($con,$_GET['name']);
             $sql = "SELECT adminId, email, firstName, lastName, occupation, birthDate, city FROM admin WHERE (firstName " .
-                " LIKE '%" . $name . "%' OR lastName LIKE '%" . $name . "%') AND active = 0;";
+                " LIKE '%" . $name . "%' OR lastName LIKE '%" . $name . "%') AND active IS NOT NULL;";
             break;
 
         case '4': //Verify admin email
             $aemail = mysqli_real_escape_string($con,$_GET['aemail']);
-            $sql = "SELECT adminId, adminTypeName, email, firstName, lastName, occupation, birthDate, city FROM admin NATURAL JOIN adminType WHERE email = '". $aemail . "' AND active = 0";
+            $sql = "SELECT adminId, adminTypeName, email, firstName, lastName, occupation, birthDate, city FROM admin NATURAL JOIN adminType WHERE email = '". $aemail . "' AND active IS NOT NULL";
             break;
 
         case '5':
@@ -305,7 +308,7 @@ function requestPostAdmin(){
 
     switch ($code) {
 
-        case '0': //add a new admin
+        case '0': //add a new admin// when doing call set key/value pair - du: true, returns resp 1 if insert success -1 otherwise
             $aemail = mysqli_real_escape_string($con,$_POST['aemail']);
             $tp = mysqli_real_escape_string($con,$_POST['tp']);
             $aname = mysqli_real_escape_string($con,$_POST['aname']);
@@ -314,18 +317,21 @@ function requestPostAdmin(){
             $aoccu = mysqli_real_escape_string($con,$_POST['aoccu']);
             $abdate = mysqli_real_escape_string($con,$_POST['abdate']);
             $acity = mysqli_real_escape_string($con,$_POST['acity']);
+            //removed column active and value = 0 because database was giving error
+            //When performing this request prdn2.0 comment/change
             $sql = "INSERT INTO admin (adminTypeId, email, adminPassword, firstName, lastName, occupation," .
-            " birthDate, city, active) VALUES ( '" . $tp ."', '" . $aemail . "', SHA2(CONCAT('" . $apass . "','" .
+            " birthDate, city) VALUES ( '" . $tp ."', '" . $aemail . "', SHA2(CONCAT('" . $apass . "','" .
                 $aemail. "'),512), '" . $aname . "','" . $alname . "','" .$aoccu. "', '" . $abdate . "','" .
-            $acity . "', 0);";
+            $acity . "');";
             break;
 
         case '1': // Test admin credential
             $aemail = mysqli_real_escape_string($con,$_POST['aemail']);
             $apass = mysqli_real_escape_string($con,$_POST['apass']);
+            //Change active = 0 to active IS NOT NULL to confirm user is active
             $sql = "SELECT adminId, adminTypeName, email, firstName, lastName, occupation, birthDate, city " .
                     "FROM admin NATURAL JOIN adminType WHERE email = '". $aemail . "' AND adminPassword = SHA2(CONCAT('".$apass. "','"
-                    . $aemail . "'),512) and active = 0;";
+                    . $aemail . "'),512) and active IS NOT NULL;";
             break;
 
         case '2': //Update admin information
@@ -344,7 +350,7 @@ function requestPostAdmin(){
 
             break;
 
-        case '3': //Change Admin Password
+        case '3': //Change Admin Password //prdn2.0 after using passcode, removes entry from recovery table
             $aemail = mysqli_real_escape_string($con,$_POST['aemail']);
             $apass = mysqli_real_escape_string($con,$_POST['apass']);
             $aid = $_POST['aid'];
@@ -380,35 +386,35 @@ function requestGetCompany(){
 
         case '1': //view all business in a city
             $theCity = mysqli_real_escape_string($con,$_GET['theCity']);
-            $sql = "SELECT * FROM company NATURAL JOIN address WHERE address.city = '". $theCity ."' AND active = 0;";
+            $sql = "SELECT * FROM company NATURAL JOIN address WHERE address.city = '". $theCity ."' AND active IS NOT NULL;";
             break;
 
         case '2': //View all subservices of a business //prdn2.0 added serviceName, subcatImage - to help with routing on webapp
             $cid = $_GET['cid'];
             $sql = "SELECT serviceId, serviceName, subServiceId, subServiceName, subcatImage, model, limitation, application FROM (company NATURAL JOIN CAS NATURAL JOIN " .
-                    "subService) NATURAL JOIN serviceType WHERE companyId = '" . $cid . "' AND active = 0;";
+                    "subService) NATURAL JOIN serviceType WHERE companyId = '" . $cid . "' AND active IS NOT NULL;";
             break;
 
         case '3': //View all subprocesss of a business //prdn2.0 added processName, subcatImage - to help with routing on webapp
             $cid = $_GET['cid'];
             $sql = "SELECT processId, processName, subProcessId, subProcessName, subcatImage, model, limitation, application FROM (company NATURAL JOIN CAP NATURAL JOIN " .
-                    " subProcess) NATURAL JOIN processType WHERE companyId = '" . $cid . "' AND active = 0;";
+                    " subProcess) NATURAL JOIN processType WHERE companyId = '" . $cid . "' AND active IS NOT NULL;";
             break;
 
         case '4': //View all submaterials of a business //prdn2.0 added material Name, subcatImage - to help with routing on webapp
             $cid = $_GET['cid'];
             $sql = "SELECT materialId, materialName, subMaterialId, subMaterialName, subcatImage, model, limitation, application FROM (company NATURAL JOIN CAM NATURAL JOIN ".
-                    " subMaterial) NATURAL JOIN materialType WHERE companyId = '" . $cid . "' AND active = 0;";
+                    " subMaterial) NATURAL JOIN materialType WHERE companyId = '" . $cid . "' AND active IS NOT NULL;";
             break;
 
         case '5': // look for a company by name
             $keyword = mysqli_real_escape_string($con,$_GET['keyword']);
-            $sql = "SELECT companyId, companyName, description, city FROM company NATURAL JOIN address WHERE companyName LIKE '%" . $keyword . "%' AND active = 0 ORDER BY companyName;";
+            $sql = "SELECT companyId, companyName, description, city FROM company NATURAL JOIN address WHERE companyName LIKE '%" . $keyword . "%' AND active IS NOT NULL ORDER BY companyName;";
             break;
 
         case '6': // delete a particular business in the system
             $cid = $_GET['cid'];
-            $sql = "UPDATE company SET active = now() WHERE companyId ='" . $cid . "';";
+            $sql = "UPDATE company SET active = NULL WHERE companyId ='" . $cid . "';";
             break;
 
         case '7': //View a business profile
@@ -417,7 +423,7 @@ function requestGetCompany(){
                     ."logo, logoType, email, addressId, line, city, country,"
                     ." zipcode, latitude, longitude, imageId, imageData, imageName, imageType FROM company NATURAL JOIN "
                     ." address LEFT OUTER JOIN images ".
-                    "ON ( company.companyId = images.companyId ) WHERE company.companyId = '".$cid."' AND active = 0;";
+                    "ON ( company.companyId = images.companyId ) WHERE company.companyId = '".$cid."' AND active IS NOT NULL;";
 					
 				
             break;
@@ -1089,33 +1095,33 @@ function requestGetCompany(){
 
             case '13': //get all companies that offer a subprocess
                 $spid = $_GET['sid'];
-                $sql = "SELECT subProcessName, companyId, companyName, description, city, latitude, longitude, logo, logoType FROM company NATURAL JOIN address NATURAL JOIN CAP NATURAL JOIN subProcess WHERE subProcessId = '".$spid."' AND active = 0 ORDER BY companyName;";
+                $sql = "SELECT subProcessName, companyId, companyName, description, city, latitude, longitude, logo, logoType FROM company NATURAL JOIN address NATURAL JOIN CAP NATURAL JOIN subProcess WHERE subProcessId = '".$spid."' AND active IS NOT NULL ORDER BY companyName;";
                 break;
 
             case '14': //get all companies that offer a subservice
                 $ssid = $_GET['sid'];
-                $sql = "SELECT subServiceName, companyId, companyName, description, city, latitude, longitude, logo, logoType FROM company NATURAL JOIN address NATURAL JOIN CAS NATURAL JOIN subService WHERE subServiceId = '".$ssid."' AND active = 0 ORDER BY companyName;";
+                $sql = "SELECT subServiceName, companyId, companyName, description, city, latitude, longitude, logo, logoType FROM company NATURAL JOIN address NATURAL JOIN CAS NATURAL JOIN subService WHERE subServiceId = '".$ssid."' AND active IS NOT NULL ORDER BY companyName;";
                 break;
 
             case '15': //get all companies that offer a submaterial
                 $smid = $_GET['sid'];
-                $sql = "SELECT subMaterialName, companyId, companyName, description, city, latitude, longitude, logo, logoType FROM company NATURAL JOIN address NATURAL JOIN CAM NATURAL JOIN subMaterial WHERE subMaterialId = '".$smid."' AND active = 0 ORDER BY companyName;";
+                $sql = "SELECT subMaterialName, companyId, companyName, description, city, latitude, longitude, logo, logoType FROM company NATURAL JOIN address NATURAL JOIN CAM NATURAL JOIN subMaterial WHERE subMaterialId = '".$smid."' AND active IS NOT NULL ORDER BY companyName;";
                 break;
             
             //prdn 2.0
             case '16': //get all companies that offer a subprocess by Name
                 $spname = $_GET['scname'];
-                $sql = "SELECT subProcessName, companyId, companyName, description, city, latitude, longitude, logo, logoType FROM company NATURAL JOIN address NATURAL JOIN CAP NATURAL JOIN subProcess WHERE subProcessName = '" . $spname . "' AND active = 0 ORDER BY companyName;";
+                $sql = "SELECT subProcessName, companyId, companyName, description, city, latitude, longitude, logo, logoType FROM company NATURAL JOIN address NATURAL JOIN CAP NATURAL JOIN subProcess WHERE subProcessName = '" . $spname . "' AND active IS NOT NULL ORDER BY companyName;";
                 break;
             //prdn 2.0
             case '17': //get all companies that offer a subservice by Name
                 $ssname = $_GET['scname'];
-                $sql = "SELECT subServiceName, companyId, companyName, description, city, latitude, longitude, logo, logoType FROM company NATURAL JOIN address NATURAL JOIN CAS NATURAL JOIN subService WHERE subServiceName = '" . $ssname . "' AND active = 0 ORDER BY companyName;";
+                $sql = "SELECT subServiceName, companyId, companyName, description, city, latitude, longitude, logo, logoType FROM company NATURAL JOIN address NATURAL JOIN CAS NATURAL JOIN subService WHERE subServiceName = '" . $ssname . "' AND active IS NOT NULL ORDER BY companyName;";
                 break;
             //prdn 2.0
             case '18': //get all companies that offer a submaterial by Name
                 $smname = $_GET['scname'];
-                $sql = "SELECT subMaterialName, companyId, companyName, description, city, latitude, longitude, logo, logoType FROM company NATURAL JOIN address NATURAL JOIN CAM NATURAL JOIN subMaterial WHERE subMaterialName = '" . $smname . "' AND active = 0 ORDER BY companyName;";
+                $sql = "SELECT subMaterialName, companyId, companyName, description, city, latitude, longitude, logo, logoType FROM company NATURAL JOIN address NATURAL JOIN CAM NATURAL JOIN subMaterial WHERE subMaterialName = '" . $smname . "' AND active IS NOT NULL ORDER BY companyName;";
                 break;
         default:
             break;
@@ -1274,6 +1280,7 @@ function requestGetMaterial(){
                     $sql .= "(@maxId,'".$ssids[0]."');";
                 }
             }
+            error_log($sql, 0);
             break;
 
 
@@ -1685,7 +1692,7 @@ function requestGetMap(){
                 $global_proc = array();
             }
 
-            $sql = "SELECT companyId, companyName, addressId, latitude, longitude, line, logo, logoType FROM company AS CMP NATURAL JOIN address WHERE CMP.active = 0 ";
+            $sql = "SELECT companyId, companyName, addressId, latitude, longitude, line, logo, logoType FROM company AS CMP NATURAL JOIN address WHERE CMP.active IS NOT NULL ";
 
 
             // // ////if one of the global arrays has values add the WHERE clause and setup lists
@@ -1870,7 +1877,7 @@ function requestGetSubmissions(){
                     "', 1, '".$swebsite."', '".$sdescription."', '".$sphone."', now(), '". $semail."', '".$sline."', '".$scity."', '".$scountry."', '".$szip."');";
             break;
 
-        case '4': //Get the number of pending request
+        case '4': //Get the number of *new* pending request  
             $sql = "SELECT COUNT(*) as number FROM submissions WHERE submissionStatus = 1; ";
             break;
 

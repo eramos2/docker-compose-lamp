@@ -1,9 +1,9 @@
 
 <?php
 //My SQL Credentials
-$host = "127.0.0.1";
+$host = "mysql";
 $user = 'root';
-$pass = '123456';
+$pass = 'tiger';
 $dbn = 'prd';
 	
 $con = mysqli_connect($host, $user, $pass, $dbn);
@@ -28,7 +28,7 @@ mysqli_next_result($con);
 $num = mysqli_affected_rows($con);
 
 if($num > 0){
-
+	
 	//send email
 	$to = $email;
 	$subject = "PR Design Network Password Reset Details";
@@ -37,12 +37,14 @@ if($num > 0){
 			"password. To proceed with the password reset process, please click the link below".
 			" (or copy and paste the URL into your browser). Once in the website, click the login option and select \"Have a passcode?\". " .
 			" Then enter this automatically generated passcode: " . $password . " along with your new credentials. " . 
-			"\n\n http://prdesignnetwork.ece.uprm.edu" .
+			"\n\n http://www.uprm.edu/creativeindustries/" .    //Added prdn2.0 new url
 			" \n\nFor your security this passcode will expire in 24 hours." . 
 			"\n\nThank you, \nPR Design Network Team";
-	$additionalheaders = "From: <pro.e.systems@gmail.com>rn";
-	$additionalheaders .= "Reply-To: noprely@pro.e.systems.com";
+	$additionalheaders = "From: <capstone2018icom@gmail.com>";  //Added prdn2.0 email
+	$additionalheaders .= "Reply-To: capstone2018icom@gmail.com";  //added prdn2.0 email
+	error_log("Before sending email", 0);
 	mail($to, $subject, $body, $additionalheaders);
+	error_log("After sending email", 0);
 }
 
 else{
