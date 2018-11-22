@@ -1,3 +1,6 @@
+//prdn2.0 vars
+var serverPath = "../creativeindustries/Server/prds.php";
+//
 var globalDropzone;
 var globalDropzone2;
 var myMarker = new google.maps.LatLng(18.1987193, -66.3526748);
@@ -117,7 +120,7 @@ function setWelcomeMsg() {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -144,7 +147,7 @@ function setUserCookie(id) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -174,7 +177,7 @@ function setAdminWelcomeMsg() {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -209,7 +212,7 @@ function setAdminCookie(type, id) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -364,7 +367,7 @@ function populateServiceList() {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         async: false,
         contentType: "application/json",
@@ -416,7 +419,7 @@ function populateProcessList() {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         async: false,
         contentType: "application/json",
@@ -466,7 +469,7 @@ function populateMaterialsList() {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         async: false,
         contentType: "application/json",
@@ -515,7 +518,7 @@ function populateServiceList2() {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         async: false,
         contentType: "application/json",
@@ -567,7 +570,7 @@ function populateProcessList2() {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         async: false,
         contentType: "application/json",
@@ -617,7 +620,7 @@ function populateMaterialsList2() {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         async: false,
         contentType: "application/json",
@@ -764,7 +767,7 @@ function validateAddAdmin(frm) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -1359,7 +1362,7 @@ function addMatMaterialsList() {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         async: false,
         contentType: "application/json",
@@ -1405,7 +1408,7 @@ function populateSubMatModalList() {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         async: false,
         contentType: "application/json",
@@ -1534,7 +1537,7 @@ function addProcProcessList() {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         async: false,
         contentType: "application/json",
@@ -1578,7 +1581,7 @@ function populateSubProcModalList() {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         async: false,
         contentType: "application/json",
@@ -1701,7 +1704,7 @@ function addServServiceList() {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         async: false,
         contentType: "application/json",
@@ -1746,7 +1749,7 @@ function populateSubServModalList() {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         async: false,
         contentType: "application/json",
@@ -1836,7 +1839,7 @@ function requestsLabel() {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         async: false,
         contentType: "application/json",
@@ -1889,7 +1892,7 @@ function loadEditAccount() {
 
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -2059,7 +2062,7 @@ function showArticlesToEdit() {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -2332,7 +2335,7 @@ function showBusinessesToEdit() {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         async: false,
         contentType: "application/json",
@@ -2429,7 +2432,7 @@ function populateEditMatMatList() {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         async: false,
         contentType: "application/json",
@@ -2516,7 +2519,7 @@ function populateEditProcProcList() {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         async: false,
         contentType: "application/json",
@@ -2605,7 +2608,7 @@ function populateEditServServList() {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         async: false,
         contentType: "application/json",
@@ -2691,7 +2694,7 @@ function validateLogin(frm) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/x-www-form-urlencoded",
         type: "POST",
@@ -2753,7 +2756,7 @@ function validateAdminLogin(frm) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/x-www-form-urlencoded",
         type: "POST",
@@ -2904,7 +2907,7 @@ function showPendingRequests() {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         async: false,
         contentType: "application/json",
@@ -3000,7 +3003,7 @@ function checkRecPassEmail(frm) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -3044,7 +3047,7 @@ function checkAdminRecPassEmail(frm) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -3155,7 +3158,7 @@ function verifyPasscode(email, code, pass) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -3197,7 +3200,7 @@ function recoverUserPassword(email, pass, id) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/x-www-form-urlencoded",
         type: "POST",
@@ -3269,7 +3272,7 @@ function verifyAdminPasscode(email, code, pass) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -3308,7 +3311,7 @@ function recoverAdminPassword(email, pass, id) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/x-www-form-urlencoded",
         type: "POST",
@@ -3347,7 +3350,7 @@ function validateResgister(frm) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -3413,7 +3416,7 @@ function getAdmins() {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend1,
         contentType: "application/json",
         type: "GET",
@@ -3476,7 +3479,7 @@ function deleteAdmin(id) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -3508,7 +3511,7 @@ function populateAdmin(id) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend1,
         contentType: "application/json",
         type: "GET",
@@ -3548,7 +3551,7 @@ function showArticlesToRemove() {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         async: false,
         contentType: "application/json",
@@ -3602,7 +3605,7 @@ function removeArticles(id) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -3636,7 +3639,7 @@ function showBusinessesToRemove() {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         async: false,
         contentType: "application/json",
@@ -3690,7 +3693,7 @@ function removeBusiness(id) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -3747,7 +3750,7 @@ function removeMaterial(id) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -3809,7 +3812,7 @@ function removeProcess(id) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -3873,7 +3876,7 @@ function removeService(id) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -3909,7 +3912,7 @@ function showAllBusiness() {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         async: false,
         contentType: "application/json",
@@ -3960,7 +3963,7 @@ function showAllBusinessFromSearch() {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         async: false,
         contentType: "application/json",
@@ -4091,7 +4094,7 @@ function getCompany(name) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -4136,7 +4139,7 @@ function getSubmaterial(name) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -4184,7 +4187,7 @@ function getSubprocess(name) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -4231,7 +4234,7 @@ function getSubservice(name) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -4302,7 +4305,7 @@ function getCompaniesOf(id, target) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -4403,7 +4406,7 @@ function showAllMaterial() {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -4460,7 +4463,7 @@ function showAllProcesses() {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -4517,7 +4520,7 @@ function showAllServices() {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -4703,7 +4706,7 @@ function loadAllArticles() {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         async: false,
         contentType: "application/json",
@@ -4957,7 +4960,7 @@ function getCompanyProfile(id) {
         };
 
         $.ajax({
-            url: "../Server/prds.php",
+            url: serverPath,
             data: dataToSend,
             contentType: "application/json",
             type: "GET",
@@ -5051,7 +5054,7 @@ function changeCompanyProfile(id) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -5163,7 +5166,7 @@ function getAllSubmaterials(company) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -5220,7 +5223,7 @@ function getAllSubProcesses(company) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -5276,7 +5279,7 @@ function getAllSubServices(company) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -5539,7 +5542,7 @@ function populateMainMaterialsList() {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         async: false,
         contentType: "application/json",
@@ -5621,7 +5624,7 @@ function populateMainProcessesList() {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         async: false,
         contentType: "application/json",
@@ -5705,7 +5708,7 @@ function populateMainServicesList() {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         async: false,
         contentType: "application/json",
@@ -5906,7 +5909,7 @@ function getAllChildren(i, cat) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         async: false,
         contentType: "application/json",
@@ -6098,7 +6101,7 @@ function getMainCompanies(s, m, p) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         async: false,
         contentType: "application/json",
@@ -6130,7 +6133,7 @@ function getRelatedProc(child, procToShow1, catToQuery) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         async: false,
         contentType: "application/json",
@@ -6176,7 +6179,7 @@ function getRelatedServ(child, servToShow1, catToQuery) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         async: false,
         contentType: "application/json",
@@ -6223,7 +6226,7 @@ function getRelatedMat(child, matToShow1, catToQuery) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         async: false,
         contentType: "application/json",
@@ -6558,7 +6561,7 @@ function modifyUser(id, name, lastname, occupation, city) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/x-www-form-urlencoded",
         type: "POST",
@@ -6589,7 +6592,7 @@ function modifyAdmin(id, name, lastname, occupation, city) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/x-www-form-urlencoded",
         type: "POST",
@@ -6620,7 +6623,7 @@ function changeUserPassword(email, pass, id) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/x-www-form-urlencoded",
         type: "POST",
@@ -6650,7 +6653,7 @@ function changeAdminPassword(email, pass, id) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/x-www-form-urlencoded",
         type: "POST",
@@ -6681,7 +6684,7 @@ function addNewAdmin(email, pass, name, lastname, occupation, birthday, city, ty
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/x-www-form-urlencoded",
         type: "POST",
@@ -6712,7 +6715,7 @@ function addNews(id, title, body, image) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -6750,7 +6753,7 @@ function addNewSubmaterial(mid, sid, pid, subName) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -6782,7 +6785,7 @@ function addNewMaterial(sid, pid, superName, subName) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -6813,7 +6816,7 @@ function addNewSubprocess(mid, sid, pid, subName) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -6844,7 +6847,7 @@ function addNewProcess(mid, sid, superName, subName) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -6876,7 +6879,7 @@ function addNewSubservice(mid, sid, pid, subName) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -6906,7 +6909,7 @@ function addNewService(mid, pid, superName, subName) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -6935,7 +6938,7 @@ function changeSubmaterialConnection(mid, sid, pid) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -6965,7 +6968,7 @@ function changeSubprocessConnection(mid, sid, pid) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -6994,7 +6997,7 @@ function changeSubserviceConnection(mid, sid, pid) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -7052,7 +7055,7 @@ function getRelatedProccesses(child, catToQuery) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         async: false,
         contentType: "application/json",
@@ -7082,7 +7085,7 @@ function getRelatedServices(child, catToQuery) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         async: false,
         contentType: "application/json",
@@ -7112,7 +7115,7 @@ function getRelatedMaterials(child, catToQuery) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         async: false,
         contentType: "application/json",
@@ -7159,7 +7162,7 @@ function addNewCompany(admin, company, video, website, telephone, description, l
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -7184,7 +7187,7 @@ function viewSubmission(id) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -7233,7 +7236,7 @@ function changeStateOfSubmission(id) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -7259,7 +7262,7 @@ function deleteSubmission(id) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -7293,7 +7296,7 @@ function getCompanyInfo(id) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -7344,7 +7347,7 @@ function getEditSubmaterials(company) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -7375,7 +7378,7 @@ function getEditSubProcesses(company) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -7408,7 +7411,7 @@ function getEditSubServices(company) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -7464,7 +7467,7 @@ function businessExtraInfo(id, arreglo, target) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -7548,7 +7551,7 @@ function modifyCompany(id, company, video, website, telephone, description, logo
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -7574,7 +7577,7 @@ function viewNews(id) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -7610,7 +7613,7 @@ function updateNews(id, title, body) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -7648,7 +7651,7 @@ function addSubmission(id, name, website, description, phone, email, line, city,
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/json",
         type: "GET",
@@ -7683,7 +7686,7 @@ function addNewUser(email, pass, name, lastname, occupation, birthday, city) {
     };
 
     $.ajax({
-        url: "../Server/prds.php",
+        url: serverPath,
         data: dataToSend,
         contentType: "application/x-www-form-urlencoded",
         type: "POST",
