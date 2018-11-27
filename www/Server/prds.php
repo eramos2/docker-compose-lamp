@@ -156,7 +156,7 @@ function requestGetUser(){
             $sql = "UPDATE users SET active = NULL WHERE userId ='" . $uid . "';";
             break;
 
-        case '3': //Recover Password Request Passcode
+        case '3': //Recover Password Request Passcode //prdn2.0 checks if passcode and email are correct in the recovery table type 0 is for users and type 1 for administrators
             $uemail = mysqli_real_escape_string($con,$_GET['uemail']);
             $passcode = mysqli_real_escape_string($con,$_GET['passcode']);
             $utype = $_GET['utype'];
@@ -381,7 +381,7 @@ function requestGetCompany(){
 
     switch ($code) {
         case '0': // get all companies
-            $sql = "SELECT companyId, companyName, description, city, latitude, logo, logoType, longitude FROM company NATURAL JOIN address WHERE active = 0 ORDER BY companyName;";
+            $sql = "SELECT companyId, companyName, description, city, latitude, logo, logoType, longitude FROM company NATURAL JOIN address WHERE active IS NOT NULL ORDER BY companyName;";
             break;
 
         case '1': //view all business in a city
@@ -459,14 +459,14 @@ function requestGetCompany(){
                     else
                         $smids = array();
 
-                    $sql = "INSERT INTO company (adminId, companyName, videoURL, website, phone, description, email, active)".
-                            " VALUES ('".$aid."','".$name."','".$URL."','".$site."','".$phone."','".$descr."','".$email."','0'); ";
+                    $sql = "INSERT INTO company (adminId, companyName, videoURL, website, phone, description, email)".    //prdn2.0 remove active column as it is now set automatically to current date
+                            " VALUES ('".$aid."','".$name."','".$URL."','".$site."','".$phone."','".$descr."','".$email."'); ";  //prdn2.0 remove active value as it is now set automatically to current date
 
                     $sql .= "SET @maxId := (select max(companyId) from company);";
 
                     $sql .= "INSERT INTO address (companyId, line, city, country, zipcode, latitude, longitude) VALUES (@maxId,'".$line."','".$city."','".$count."','".$zip."','".$lat."','".$lon."' );";
 
-
+                    //Array of arrays (subarrays are each subcategory)prdn2.0 [arrayindex - value], 0- subcategory name, 1 -subcategory id, 2- categoryid ,3- model, 4 -application, 5 -limitation
                     if  (count($spids) >= 1){
                         $sql = $sql."INSERT INTO CAP(companyId, subProcessId, model, application, limitation) VALUES ";
                         if (count($spids) > 1){
@@ -1157,7 +1157,7 @@ function requestGetMaterial(){
             $sql = "SELECT * FROM materialType NATURAL JOIN subMaterial WHERE materialId = '" . $mid . "' ORDER BY subMaterialName;";
             break;
 
-        case '4': //Delete a submaterial
+        case '4': //Delete a submaterial //prdn2.0 if it was the last submaterial of it's type delete the materialType
             $smid = $_GET['smid'];
             $sql = "DELETE FROM subMaterial WHERE subMaterialId = '".$smid."'; DELETE FROM materialType ".
             "WHERE not exists (SELECT * FROM subMaterial WHERE subMaterial.materialId = materialType.materialId);";

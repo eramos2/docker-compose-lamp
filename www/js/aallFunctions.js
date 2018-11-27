@@ -1,5 +1,8 @@
 //prdn2.0 vars
-var serverPath = "../creativeindustries/Server/prds.php";
+//For local development
+var serverPath = "../Server/prds.php";
+//for production build
+//var serverPath = "../creativeindustries/Server/prds.php";
 //
 var globalDropzone;
 var globalDropzone2;
@@ -1127,9 +1130,10 @@ function getBsnExtraInputs() {
                 country + "\n" + zipcode + "\n" + latitudeAdd + "\n" + longitudeAdd);
         }
         if (addingCompany == 1) {
-            console.log("Testing mod, app and limit null values: " + procChecked);
+            console.log("Tesing mod, app and limit null values: " + procChecked);
             addNewCompany(currentAdmin, companyName, videoURL, website, phone, description, null, email,
                 procChecked, servChecked, matChecked, address, city, country, zipcode, latitudeAdd, longitudeAdd);
+
             executeDropzone(globalDropzone);
             if (addBsnType == '0') {
                 //// alert("SubId: "+myForm.submissionId.value);
@@ -1138,7 +1142,8 @@ function getBsnExtraInputs() {
                 executeDropzone(globalDropzone2);
             }
         } else {
-            console.log("Testing mod, app and limit null values: " + procChecked);
+            console.log("Testing mod, app and limit +null values: " + procChecked);
+            console.log("modifying company");
             modifyCompany(myForm.companyId.value, companyName, videoURL, website, phone, description, null, email,
                 procChecked, servChecked, matChecked, address, city, country, zipcode, latitudeAdd, longitudeAdd);
             executeDropzone(globalDropzone);
@@ -7135,7 +7140,10 @@ function getRelatedMaterials(child, catToQuery) {
 }
 
 function addNewCompany(admin, company, video, website, telephone, description, logo, email, processes, services, materials, ln, theCity, country, zipcode, lati, longi) {
-    //    console.log("I'm adding a new business");
+    console.log("I'm adding a new business");
+    console.log(materials);
+    console.log(processes);
+    console.log(services);
 
     var dataToSend = {
         endpoint: 'company',
