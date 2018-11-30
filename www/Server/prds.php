@@ -9,11 +9,13 @@ $dbn = 'prd';
 $endpoint = $_REQUEST['endpoint'];
 $code = $_REQUEST['code'];
 $con = mysqli_connect($host, $user, $pass, $dbn);
+
 //prdn 2.0  some of rows contain non-utf8 encoded character causing json_encode to fail, next line fixes it
 mysqli_set_charset($con, 'utf8');
 error_log($endpoint,0);  
 error_log($code,0);  
-
+error_log($_REQUEST['du'], 0);
+error_log("the requests",0);
 $sql = getQuery();
 
 error_log($sql, 0);
@@ -56,6 +58,8 @@ function getQuery(){
 
 global $endpoint;
 global $con;
+error_log($endpoint, 0);
+error_log("The endpoint", 0);
     switch ($endpoint) {
         case 'users':
             if($_SERVER['REQUEST_METHOD'] == "GET")
