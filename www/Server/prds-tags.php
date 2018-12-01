@@ -16,7 +16,7 @@ error_log($code,0);
 
 $sql = getQuery();
 
-
+error_log($sql, 0);
 if (!$con) {
     die('Could not connect: ' . mysqli_error($con));
 }
@@ -94,11 +94,11 @@ function requestGetTags(){
     
         case '1': //Get all tags from a company with their respective endorsements count
             $cName = $_GET['cname']; //The company name 
-            $sql = "SELECT cmpT.tagId, COALESCE(times, 0) as endorsements FROM (SELECT tagId "
-              . "FROM company NATURAL JOIN CAT NATURAL JOIN tags WHERE companyName = \'" . $cname . "'"
+            $sql = "SELECT tagId, tagName, tagCategory, endorsements FROM (SELECT cmpT.tagId, COALESCE(times, 0) as endorsements FROM (SELECT tagId "
+              . "FROM company NATURAL JOIN CAT NATURAL JOIN tags WHERE companyName = '" . $cName . "' AND active IS NOT NULL"
             . ") as cmpT LEFT JOIN ( SELECT tagId, COUNT(*) as times FROM company NATURAL JOIN endorsement "
-            . " WHERE companyName = '". $cname ."' GROUP BY tagId) as endorsedTags "  
-            . "ON cmpT.tagId = endorsedTags.tagId;";
+            . " WHERE companyName = '". $cName ."' GROUP BY tagId) as endorsedTags "  
+            . "ON cmpT.tagId = endorsedTags.tagId) as compEnd NATURAL JOIN tags;";
             break;
         
         case '2': //Get all tags with their id,category, and name
@@ -132,6 +132,17 @@ function requestPostTags(){
             $category = mysqli_real_escape_string($con,$_POST['category']);
  
             $sql = "INSERT INTO tags (tagName, tagCategory) VALUES ('" . $name . "','"   . $category . "');";
+            break;
+        case '1': //edit tag name, from given tag id and tag name
+            $name = mysqli_real_escape_string($con,$_POST['name']);
+            $tid = mysqli_real_escape_string($con,$_POST['tagId']);
+            
+            $sql = "UPDATE tags SET tagName = '". $name . "' WHERE tags.tagId = '". $tid ."'";
+            break;
+        case '2': //Delete a tag 
+            $tid = mysqli_real_escape_string($con,$_POST['tagId']);
+           
+            $sql = "DELETE FROM tags WHERE tagId = '".$tid."'";
             break;
     }
     return $sql;

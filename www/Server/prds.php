@@ -758,6 +758,7 @@ function requestGetCompany(){
                     $lat = mysqli_real_escape_string($con,$_GET['lat']);
                     $lon = mysqli_real_escape_string($con,$_GET['lon']);
 
+
                     if(isset($_GET['spids']))
                         $spids = $_GET['spids'];
                     else
@@ -772,6 +773,10 @@ function requestGetCompany(){
                         $smids = $_GET['smids'];
                     else
                         $smids = array();
+                    if(isset($_GET['smids']))
+                        $tids = $_GET['tids'];
+                    else
+                        $tids = array();
 
                     $sql = "UPDATE company SET companyName = '"
                             .$name."', videoURL = '"
@@ -791,7 +796,8 @@ function requestGetCompany(){
                     $sql = $sql."DELETE FROM CAP WHERE companyId = '".$cid."';";
                     $sql = $sql."DELETE FROM CAS WHERE companyId = '".$cid."';";
                     $sql = $sql."DELETE FROM CAM WHERE companyId = '".$cid."';";
-
+                    $sql = $sql."DELETE FROM CAT WHERE companyId = '".$cid."';";
+                    
                     if  (count($spids) >= 1){
                         $sql = $sql."INSERT INTO CAP(companyId, subProcessId, model, application, limitation) VALUES ";
                         if (count($spids) > 1){
@@ -1062,6 +1068,27 @@ function requestGetCompany(){
         					}
         				}
                     }
+                    //prdn2.0 array of tags id array
+                    if  (count($tids) >= 1){
+                        $sql = $sql."INSERT INTO CAT(companyId, tagId) VALUES ";
+                        if (count($tids) > 1){
+                            for ($x = 0; $x < count($tids); $x++) {
+
+                                if ($x < count($tids)-1){
+        							$sql = $sql."(".$cid.",".$tids[$x][0]."), ";
+
+
+        						}elseif($x == (count($tids) - 1)){
+        							$sql = $sql."(".$cid.",".$tids[$x][0].");";
+
+        						}
+                            }
+                        }else if(count($tids) == 1){
+        						$sql = $sql."(".$cid.",".$tids[0][0].");";
+
+                        }
+                      }
+                    
             break;
 
             case '10': //Get limitation application and model for a subprocess
