@@ -4,7 +4,7 @@ services:
   webserver:
     image: eramos2/prdn-server:test
     build: 
-      context: ./bin/webserver
+      context: .
     container_name: 'png-webserver'
     restart: 'always'
     ports:

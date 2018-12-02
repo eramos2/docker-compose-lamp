@@ -1,11 +1,13 @@
 FROM php:7.1-apache
 
+#Add server folder
+#ADD setupServ /usr/setupServ
+
 RUN apt-get -y update --fix-missing
 RUN apt-get upgrade -y
 
 # Install useful tools
 RUN apt-get -y install nano
-
 # Install important libraries
 RUN apt-get -y install --fix-missing apt-utils build-essential git curl libcurl3 libcurl3-dev zip
 
@@ -43,4 +45,22 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
 RUN docker-php-ext-install -j$(nproc) gd
 
 # Enable apache modules
+#RUN a2enmod rewrite headersi
+
+#RUN apt-get -y install --fix-missing vim
+#RUN apt-get -y install --fix-missing msmtp
+
+#RUN mkdir setupServ
+#RUN the setupserver script
+
+
+
+COPY /setupServ /usr/setupServ
+
+#RUN chmod +x /usr/setupServ/setup-server.sh
+
+#RUN /usr/setupServ/setup-server.sh
+
+# Enable apache modules
 RUN a2enmod rewrite headers
+
