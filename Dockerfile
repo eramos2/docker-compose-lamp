@@ -54,13 +54,13 @@ RUN docker-php-ext-install -j$(nproc) gd
 #RUN the setupserver script
 
 
-WORKDIR /x/repo/docker/buildfiles
 
-COPY setupServer /usr/setupServer
 
-RUN chmod +x /usr/setupServer/setup-server.sh
+#COPY setupServer /usr/setupServer
 
-RUN /usr/setupServer/setup-server.sh
+#RUN chmod +x /usr/setupServer/setup-server.sh
+
+#RUN /usr/setupServer/setup-server.sh
 
 # Enable apache modules
 RUN a2enmod rewrite headers

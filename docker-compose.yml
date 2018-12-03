@@ -2,9 +2,9 @@ version: "3"
 
 services:
   webserver:
-    image: eramos2/prdn-server:test
-    build: 
-      context: .
+    image: eramos2/png-webserver:version1dec
+    build:  
+      context: ./bin/webserver
     container_name: 'png-webserver'
     restart: 'always'
     ports:

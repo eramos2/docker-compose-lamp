@@ -55,7 +55,7 @@ RUN docker-php-ext-install -j$(nproc) gd
 
 
 
-COPY /setupServ /usr/setupServ
+#COPY /setupServ /usr/setupServ
 
 #RUN chmod +x /usr/setupServ/setup-server.sh
 

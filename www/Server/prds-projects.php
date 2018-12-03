@@ -15,7 +15,7 @@ error_log($endpoint,0);
 error_log($code,0);  
 
 $sql = getQuery();
-
+error_log($sql,0); 
 
 if (!$con) {
     die('Could not connect: ' . mysqli_error($con));
@@ -79,13 +79,13 @@ global $con;
 };
 
 
-function requestGetUser(){
+function requestGetProjects(){
 	global $con;
     global $code;
     switch ($code) {
         case '0': //get all user's projects with their respective tags by the given user id
             $uid = $_GET['uid'];
-            $sql = "SELECT projectName, tagName, tagCategory " 
+            $sql = "SELECT projectId, projectName, tagName, tagCategory " 
                    . "FROM users NATURAL JOIN UAP NATURAL JOIN projects NATURAL JOIN PAT NATURAL JOIN tags "
                    . "WHERE userId = '" . $uid ."';";
             break;
@@ -117,14 +117,51 @@ function requestGetUser(){
         case '6': //Get all tags name and id by the given tag category name
             $tcat= $_GET['tcat'];
             $sql = "SELECT tagId, tagName FROM tags WHERE tagCategory = '" . $tcat. "';";
-        
-        case '7':
-            $sql = "";
-               //Add project to user (needs to add tags to project if any)
-             //needs to add project name to project
-            //INSERT INTO `UAP` (`userId`, `projectId`) VALUES ('5', '3');
-        }
+            break;
 
+        case '7': //Add new project 
+            $uid = $_GET['uid'];
+            $pname = mysqli_real_escape_string($con,$_GET['pname']);
+
+            //Check for tags related to the project
+            if(isset($_GET['tids']))
+                $spids = $_GET['tids'];
+            else
+                $spids = array();
+
+            //Add the project name
+            $sql = "INSERT INTO projects (projectName) VALUES ('".$pname."');";
+
+            //Get the new project id
+            $sql .= "SET @maxId := (select max(projectId) from projects);";
+
+            //Add the relation between user and project
+            $sql .= "INSERT INTO UAP (userId, projectId) VALUES ('". $uid ."', @maxId);";
+
+            //Add relation between project and tags
+            if  (count($tids) >= 1){
+                $sql = $sql."INSERT INTO PAT(projectId, tagId) VALUES ";
+                if (count($tids) > 1){
+                    for ($x = 0; $x < count($tids); $x++) {
+
+                        if ($x < count($tids)-1){
+                            $sql = $sql."(@maxId,".$tids[$x][0]."), ";
+
+
+                        }elseif($x == (count($tids) - 1)){
+                            $sql = $sql."(@maxId,".$tids[$x][0].");";
+
+                        }
+                    }
+                }else if(count($tids) == 1){
+                        $sql = $sql."(@maxId,".$tids[0][0].");";
+
+                }
+              }
+
+              break;   
+        }
+        return $sql;
 }
 
 ?>

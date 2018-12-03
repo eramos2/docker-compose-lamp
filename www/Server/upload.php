@@ -3,7 +3,7 @@
 <body>
 
 <?php
-$con=mysqli_connect("127.0.0.1","root","123456","prd");
+$con=mysqli_connect('mysql',"root",'tiger',"prd");
 //$con=mysqli_connect("50.62.209.2","proesystems","123pescao","prd");
 if (!$con){
 print "Database Connection Error.<br>";

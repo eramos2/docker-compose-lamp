@@ -1,8 +1,8 @@
 <?php
 if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'){
-	$host = "136.145.116.231";
+	$host = "mysql";
 	$user = 'root';
-	$pass = 'Capstone2014';
+	$pass = 'tiger';
 	$dbn = 'prd';
 	$link = mysqli_connect($host, $user, $pass, $dbn);
     $dir = $_REQUEST["dir"];

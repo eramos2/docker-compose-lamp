@@ -113,8 +113,22 @@ function requestGetTags(){
             $tcat= $_GET['tcat'];
             $sql = "SELECT tagId, tagName FROM tags WHERE tagCategory = '" . $tcat. "';";
             break;
-        case '5':
-            $sql = "";
+        case '5': //Add endorsement with userid tagid and company id, removes any previous duplicate endorsement
+            $cid = $_GET['cid']; //the company id
+            $uid = $_GET['uid']; //the user id
+            $tid = $_GET['tid']; // the tag id 
+            //To prevent duplicates
+            $sql = "DELETE FROM endorsement WHERE companyId = '".$cid."' AND userId = '".$uid."' AND tagId = '".$tid."';";
+            $sql = $sql. " INSERT INTO endorsement(companyId, userId, tagId) VALUES ('".$cid."','".$uid."','".$tid."')";
+             
+            break;
+        case '6': //Remove endorsement with userid tagid and company id
+            $cid = $_GET['cid']; //the company id
+            $uid = $_GET['uid']; //the user id
+            $tid = $_GET['tid']; // the tag id 
+            //To prevent duplicates
+            $sql = "DELETE FROM endorsement WHERE companyId = '".$cid."' AND userId = '".$uid."' AND tagId = '".$tid."';";
+             
             break;
                //Add project to user (needs to add tags to project if any)
              //needs to add project name to project
@@ -148,20 +162,6 @@ function requestPostTags(){
     return $sql;
 }
 
-//All project related GET calls
-function requestGetProjects() {
-    global $con;
-    global $code;
-    switch ($code) {
-        case '0': //get all user's projects with their respective tags by the given user id
-            $uid = $_GET['uid'];
-            $sql = "SELECT projectName, tagName, tagCategory " 
-                   . "FROM users NATURAL JOIN UAP NATURAL JOIN projects NATURAL JOIN PAT NATURAL JOIN tags "
-                   . "WHERE userId = '" . $uid ."';";
-            break;
-    }
-    return $sql;
 
-}
 
 ?>

@@ -385,7 +385,7 @@ function requestGetCompany(){
 
     switch ($code) {
         case '0': // get all companies
-            $sql = "SELECT companyId, companyName, description, city, latitude, logo, logoType, longitude FROM company NATURAL JOIN address WHERE active IS NOT NULL ORDER BY companyName;";
+            $sql = "SELECT companyId, companyName, description, city, latitude, logo, logoType, logoName, longitude FROM company NATURAL JOIN address WHERE active IS NOT NULL ORDER BY companyName;";
             break;
 
         case '1': //view all business in a city
@@ -424,7 +424,7 @@ function requestGetCompany(){
         case '7': //View a business profile
             $cid = $_GET['cid'];
             $sql = "SELECT company.companyId AS companyId, adminId, companyName, videoURL, website, phone, description, "
-                    ."logo, logoType, email, addressId, line, city, country,"
+                    ."logo, logoType, logoName, email, addressId, line, city, country,"
                     ." zipcode, latitude, longitude, imageId, imageData, imageName, imageType FROM company NATURAL JOIN "
                     ." address LEFT OUTER JOIN images ".
                     "ON ( company.companyId = images.companyId ) WHERE company.companyId = '".$cid."' AND active IS NOT NULL;";
@@ -447,6 +447,7 @@ function requestGetCompany(){
                     $zip = mysqli_real_escape_string($con,$_GET['zip']);
                     $lat = mysqli_real_escape_string($con,$_GET['lat']);
                     $lon = mysqli_real_escape_string($con,$_GET['lon']);
+                    $logoName = mysqli_real_escape_string($con,$_GET['logoName']);   //image url
 
                     if(isset($_GET['spids']))
                         $spids = $_GET['spids'];
@@ -463,8 +464,8 @@ function requestGetCompany(){
                     else
                         $smids = array();
 
-                    $sql = "INSERT INTO company (adminId, companyName, videoURL, website, phone, description, email)".    //prdn2.0 remove active column as it is now set automatically to current date
-                            " VALUES ('".$aid."','".$name."','".$URL."','".$site."','".$phone."','".$descr."','".$email."'); ";  //prdn2.0 remove active value as it is now set automatically to current date
+                    $sql = "INSERT INTO company (adminId, companyName, videoURL, website, phone, description, email, logoName)".    //prdn2.0 remove active column as it is now set automatically to current date
+                            " VALUES ('".$aid."','".$name."','".$URL."','".$site."','".$phone."','".$descr."','".$email."','".$logoName."'); ";  //prdn2.0 remove active value as it is now set automatically to current date
 
                     $sql .= "SET @maxId := (select max(companyId) from company);";
 
@@ -773,7 +774,8 @@ function requestGetCompany(){
                         $smids = $_GET['smids'];
                     else
                         $smids = array();
-                    if(isset($_GET['smids']))
+
+                    if(isset($_GET['tids']))
                         $tids = $_GET['tids'];
                     else
                         $tids = array();
@@ -1142,17 +1144,17 @@ function requestGetCompany(){
             //prdn 2.0
             case '16': //get all companies that offer a subprocess by Name
                 $spname = $_GET['scname'];
-                $sql = "SELECT subProcessName, companyId, companyName, description, city, latitude, longitude, logo, logoType FROM company NATURAL JOIN address NATURAL JOIN CAP NATURAL JOIN subProcess WHERE subProcessName = '" . $spname . "' AND active IS NOT NULL ORDER BY companyName;";
+                $sql = "SELECT subProcessName, companyId, companyName, description, city, latitude, longitude, logo, logoType FROM company NATURAL JOIN address NATURAL JOIN CAP NATURAL JOIN subProcess WHERE subProcessName LIKE '%" . $spname . "%' AND active IS NOT NULL ORDER BY companyName;";
                 break;
             //prdn 2.0
             case '17': //get all companies that offer a subservice by Name
                 $ssname = $_GET['scname'];
-                $sql = "SELECT subServiceName, companyId, companyName, description, city, latitude, longitude, logo, logoType FROM company NATURAL JOIN address NATURAL JOIN CAS NATURAL JOIN subService WHERE subServiceName = '" . $ssname . "' AND active IS NOT NULL ORDER BY companyName;";
+                $sql = "SELECT subServiceName, companyId, companyName, description, city, latitude, longitude, logo, logoType FROM company NATURAL JOIN address NATURAL JOIN CAS NATURAL JOIN subService WHERE subServiceNameLIKE '%" . $ssname . "%' AND active IS NOT NULL ORDER BY companyName;";
                 break;
             //prdn 2.0
             case '18': //get all companies that offer a submaterial by Name
                 $smname = $_GET['scname'];
-                $sql = "SELECT subMaterialName, companyId, companyName, description, city, latitude, longitude, logo, logoType FROM company NATURAL JOIN address NATURAL JOIN CAM NATURAL JOIN subMaterial WHERE subMaterialName = '" . $smname . "' AND active IS NOT NULL ORDER BY companyName;";
+                $sql = "SELECT subMaterialName, companyId, companyName, description, city, latitude, longitude, logo, logoType FROM company NATURAL JOIN address NATURAL JOIN CAM NATURAL JOIN subMaterial WHERE subMaterialName LIKE '%" . $smname . "%' AND active IS NOT NULL ORDER BY companyName;";
                 break;
         default:
             break;
