@@ -1927,7 +1927,7 @@ function requestGetSubmissions(){
     switch ($code) {
         case '0': //View all submissions
             $sql = "SELECT submissionId, userId, companyName, submissionStatus, website, description, phone, submissionDate, "
-			."email, line, city, country, zipcode FROM submissions ORDER BY submissionStatus DESC;";
+			."email, line, city, country, zipcode, imageName FROM submissions ORDER BY submissionStatus DESC;";
             break;
 
         case '1': //delete a particular submission
@@ -1946,26 +1946,63 @@ function requestGetSubmissions(){
             $swebsite = mysqli_real_escape_string($con,$_GET['swebsite']);
             $sdescription = mysqli_real_escape_string($con,$_GET['sdescription']);
             $sphone = mysqli_real_escape_string($con,$_GET['sphone']);
-            ///////////////////////////////////////////////////////////////$simage = mysqli_real_escape_string($con,$_GET['simage']);
+            $simage = mysqli_real_escape_string($con,$_GET['simage']);
             $semail = mysqli_real_escape_string($con,$_GET['semail']);
             $sline = mysqli_real_escape_string($con,$_GET['sline']);
             $scity = mysqli_real_escape_string($con,$_GET['scity']);
             $scountry = mysqli_real_escape_string($con,$_GET['scountry']);
             $szip = mysqli_real_escape_string($con,$_GET['szip']);
+             
+            
+            //Check for tags related to the submission
+            if(isset($_GET['tids']))
+                $tids = $_GET['tids'];
+            else
+                $tids = array();
 
 
             $sql = "INSERT INTO submissions (userId, companyName, submissionStatus, website," .
-                    " description, phone, submissionDate, email, line, city, country, zipcode) VALUES ('".$uid."', '".$sname.
-                    "', 1, '".$swebsite."', '".$sdescription."', '".$sphone."', now(), '". $semail."', '".$sline."', '".$scity."', '".$scountry."', '".$szip."');";
+                    " description, phone, submissionDate, email, line, city, country, zipcode, imageName) VALUES ('".$uid."', '".$sname.
+                    "', 1, '".$swebsite."', '".$sdescription."', '".$sphone."', now(), '". $semail."', '".$sline."', '".$scity."', '".$scountry."', '".$szip."', '". $simage ."');";
+            
+            //Get the new submission id
+            $sql .= " SET @maxId := (select max(submissionId) from submissions);";
+
+            //Add relation between submission and tags
+            if  (count($tids) >= 1){
+                $sql = $sql."INSERT INTO SAT (submissionId, tagId) VALUES ";
+                if (count($tids) > 1){
+                    for ($x = 0; $x < count($tids); $x++) {
+
+                        if ($x < count($tids)-1){
+                            $sql = $sql."(@maxId,".$tids[$x][0]."), ";
+
+
+                        }elseif($x == (count($tids) - 1)){
+                            $sql = $sql."(@maxId,".$tids[$x][0].");";
+
+                        }
+                    }
+                }else if(count($tids) == 1){
+                        $sql = $sql."(@maxId,".$tids[0][0].");";
+
+                }
+              }
+
+
             break;
 
         case '4': //Get the number of *new* pending request  
             $sql = "SELECT COUNT(*) as number FROM submissions WHERE submissionStatus = 1; ";
             break;
 
-        case '5': //Get a particular submission
+        case '5': //Get a particular submission and its associated tags
             $subid = $_GET['subid'];
-            $sql = "SELECT * FROM submissions WHERE submissionId = '".$subid."'";
+            $sql = "SELECT sub.submissionId, sub.companyName, sub.website, sub.description, sub.phone, sub.email," . 
+            " sub.imageName, sub.city, sub.zipcode, tag.tagId FROM (SELECT * FROM submissions WHERE submissionId = '".$subid."') ".
+            " as sub LEFT OUTER JOIN (SELECT * FROM SAT NATURAL JOIN tags) as tag ON sub.submissionId = tag.submissionId;";
+            //"SELECT * FROM submissions NATURAL JOIN SAT NATURAL JOIN tags WHERE submissionId = '".$subid."';";
+            //  original call"SELECT * FROM submissions WHERE submissionId = '".$subid."'";
             break;
 
         default:

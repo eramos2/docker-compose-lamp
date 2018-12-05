@@ -194,7 +194,7 @@ function requestGetProjects(){
             //Remove any previous tags
             $sql = "DELETE FROM PAT WHERE projectId = '".$pid."';";
             //Add the project name
-            $sql = $sql."UPDATE projects SET projectName '".$pname."' WHERE projectId = '".$pid."';";
+            $sql = $sql. " UPDATE projects SET projectName = '".$pname."' WHERE projectId = '".$pid."';";
             
             //Add relation between project and tags
             if  (count($tids) >= 1){
