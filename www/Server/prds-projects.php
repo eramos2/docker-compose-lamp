@@ -85,7 +85,7 @@ function requestGetProjects(){
     switch ($code) {
         case '0': //get all user's projects with their respective tags by the given user id
             $uid = $_GET['uid'];
-            $sql = "SELECT projectId, projectName, tagName, tagCategory " 
+            $sql = "SELECT projectId, projectName, tagName, tagCategory, tagId " 
                    . "FROM users NATURAL JOIN UAP NATURAL JOIN projects NATURAL JOIN PAT NATURAL JOIN tags "
                    . "WHERE userId = '" . $uid ."';";
             break;
@@ -159,7 +159,25 @@ function requestGetProjects(){
                 }
               }
 
-              break;   
+              break; 
+
+        case '8':   //Get Businesses recommendations based on the project tags(gets tags Matched count and the company data )
+            $pid = $_GET['pid']; // The projectId to get its associated tags, and get the businesses that match this tags. 
+            
+            $sql = "SELECT companyId, companyName, description, city, logo, logoName, logoType, tagsMatched FROM ".
+            "(SELECT companyId, companyName, description, logo, logoName, logoType, COUNT(*) as tagsMatched FROM ".
+            "(SELECT tagId FROM projects NATURAL JOIN PAT NATURAL JOIN tags WHERE projectId = '". $pid ."') ". 
+            " as projectTags NATURAL JOIN CAT NATURAL JOIN company WHERE active IS NOT NULL ".
+            "GROUP BY companyId ORDER BY tagsMatched DESC) as recommendedComps NATURAL JOIN address;";
+
+            break;
+
+        case '9': //Remove project
+            $pid = $_GET['pid'];
+
+            $sql = "DELETE FROM UAP WHERE projectId = '". $pid ."'; DELETE FROM projects WHERE projectId = '". $pid ."';";
+        
+            break;
         }
         return $sql;
 }
