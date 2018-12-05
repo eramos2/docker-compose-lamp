@@ -413,9 +413,16 @@ function requestGetCompany(){
 
         case '5': // look for a company by name or it's assigned tags
             $keyword = mysqli_real_escape_string($con,$_GET['keyword']);
-            $sql = "SELECT companyId, companyName, description, city, tagName, tagCategory " .
-                   "FROM company NATURAL JOIN address NATURAL JOIN CAT NATURAL JOIN tags " .
-                   "WHERE (companyName LIKE '%" . $keyword . "%' OR tagName LIKE '%" . $keyword . "%' OR tagCategory LIKE '%" . $keyword . "%') AND active IS NOT NULL ORDER BY companyName;";
+            $sql = "SELECT companies.companyId, companyName, description, city, tagId, tagName, tagCategory " .
+                  "FROM (SELECT companyId, companyName, description, city, active " . 
+                  "FROM company NATURAL JOIN address) as companies LEFT JOIN (SELECT * FROM CAT NATURAL JOIN tags) as companyTags ".
+                  "ON companies.companyId = companyTags.companyId " .  
+                  "WHERE (companyName LIKE '%" . $keyword . "%' OR tagName LIKE '%" . $keyword . "%' OR tagCategory LIKE '%" . $keyword . "%') AND active IS NOT NULL;";
+            
+            
+            //"SELECT companyId, companyName, description, city, tagName, tagCategory " .
+             //      "FROM company NATURAL JOIN address NATURAL JOIN CAT NATURAL JOIN tags " .
+               //    "WHERE (companyName LIKE '%" . $keyword . "%' OR tagName LIKE '%" . $keyword . "%' OR tagCategory LIKE '%" . $keyword . "%') AND active IS NOT NULL ORDER BY companyName;";
             
             // original query from prdn1.0 "SELECT companyId, companyName, description, city FROM company NATURAL JOIN address WHERE companyName LIKE '%" . $keyword . "%' AND active IS NOT NULL ORDER BY companyName;";
             break;
@@ -1174,8 +1181,8 @@ function requestGetCompany(){
             //prdn 2.0
             case '16': //get all companies that offer a subprocess by Name (Gets Associated company tags)
                 $spname = $_GET['scname'];
-                $sql =  "SELECT * FROM (SELECT subProcessName, companies.companyId, companyName, description, city, latitude, longitude, logo, logoType, logoName "
-                . "FROM company NATURAL JOIN address NATURAL JOIN CAM NATURAL JOIN subProcess WHERE subProcessName LIKE '%" . $spname . "%' " 
+                $sql =  "SELECT subProcessName, companies.companyId, companyName, description, city, latitude, longitude, logo, logoType, logoName, tagId, tagName, tagCategory FROM (SELECT subProcessName, companyId, companyName, description, city, latitude, longitude, logo, logoType, logoName "
+                . "FROM company NATURAL JOIN address NATURAL JOIN CAP NATURAL JOIN subProcess WHERE subProcessName LIKE '%" . $spname . "%' " 
                 . "AND active IS NOT NULL ORDER BY companyName) as companies LEFT JOIN (SELECT * FROM CAT NATURAL JOIN tags) as tagToComp "
                 . "ON companies.companyId = tagToComp.companyId;";
                 // original prdn2.0 "SELECT subProcessName, companyId, companyName, description, city, latitude, longitude, logo, logoType FROM company NATURAL JOIN address NATURAL JOIN CAP NATURAL JOIN subProcess WHERE subProcessName LIKE '%" . $spname . "%' AND active IS NOT NULL ORDER BY companyName;";
@@ -1183,8 +1190,8 @@ function requestGetCompany(){
             //prdn 2.0
             case '17': //get all companies that offer a subservice by Name
                 $ssname = $_GET['scname'];
-                $sql = "SELECT * FROM (SELECT subServiceName, companies.companyId, companyName, description, city, latitude, longitude, logo, logoType, logoName "
-                . "FROM company NATURAL JOIN address NATURAL JOIN CAM NATURAL JOIN subService WHERE subServiceName LIKE '%" . $ssname . "%' " 
+                $sql = "SELECT subServiceName, companies.companyId, companyName, description, city, latitude, longitude, logo, logoType, logoName, tagId, tagName, tagCategory FROM (SELECT subServiceName, companyId, companyName, description, city, latitude, longitude, logo, logoType, logoName "
+                . "FROM company NATURAL JOIN address NATURAL JOIN CAS NATURAL JOIN subService WHERE subServiceName LIKE '%" . $ssname . "%' " 
                 . "AND active IS NOT NULL ORDER BY companyName) as companies LEFT JOIN (SELECT * FROM CAT NATURAL JOIN tags) as tagToComp "
                 . "ON companies.companyId = tagToComp.companyId;";
                 //original prdn2.0 "SELECT subServiceName, companyId, companyName, description, city, latitude, longitude, logo, logoType FROM company NATURAL JOIN address NATURAL JOIN CAS NATURAL JOIN subService WHERE subServiceNameLIKE '%" . $ssname . "%' AND active IS NOT NULL ORDER BY companyName;";
