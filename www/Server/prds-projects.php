@@ -125,9 +125,9 @@ function requestGetProjects(){
 
             //Check for tags related to the project
             if(isset($_GET['tids']))
-                $spids = $_GET['tids'];
+                $tids = $_GET['tids'];
             else
-                $spids = array();
+                $tids = array();
 
             //Add the project name
             $sql = "INSERT INTO projects (projectName) VALUES ('".$pname."');";
@@ -178,6 +178,46 @@ function requestGetProjects(){
             $sql = "DELETE FROM UAP WHERE projectId = '". $pid ."'; DELETE FROM projects WHERE projectId = '". $pid ."';";
         
             break;
+        
+        case '10': //Edit project
+
+            $uid = $_GET['uid'];
+            $pname = mysqli_real_escape_string($con,$_GET['pname']);
+            $pid = $_GET['pid'];
+
+            //Check for tags related to the project
+            if(isset($_GET['tids']))
+                $tids = $_GET['tids'];
+            else
+                $tids = array();
+
+            //Remove any previous tags
+            $sql = "DELETE FROM PAT WHERE projectId = '".$pid."';";
+            //Add the project name
+            $sql = $sql."UPDATE projects SET projectName '".$pname."' WHERE projectId = '".$pid."';";
+            
+            //Add relation between project and tags
+            if  (count($tids) >= 1){
+                $sql = $sql."INSERT INTO PAT(projectId, tagId) VALUES ";
+                if (count($tids) > 1){
+                    for ($x = 0; $x < count($tids); $x++) {
+
+                        if ($x < count($tids)-1){
+                            $sql = $sql."('".$pid."','".$tids[$x][0]."'), ";
+
+
+                        }elseif($x == (count($tids) - 1)){
+                            $sql = $sql."('".$pid."','".$tids[$x][0]."');";
+
+                        }
+                    }
+                }else if(count($tids) == 1){
+                        $sql = $sql."('".$pid."','".$tids[0][0]."');";
+
+                }
+              }
+
+              break;
         }
         return $sql;
 }
